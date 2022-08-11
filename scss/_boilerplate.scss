@@ -1,0 +1,18 @@
+:root {
+  --clr-dark: #272727;
+  --clr-bg: #fdcb6e;
+}
+
+*,
+*::after,
+*::after {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  color: var(--clr-dark);
+  font-family: "Architects Daughter", cursive;
+  background-image: radial-gradient(#bfc0c1 8.2%, transparent 0);
+  background-size: 20px 20px;
+}

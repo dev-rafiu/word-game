@@ -1,0 +1,49 @@
+.container {
+  min-height: 100vh;
+  display: grid;
+  place-content: center;
+  position: relative;
+}
+
+.empty-boxes-container,
+.mixed-word-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  padding: 1rem;
+}
+
+.empty-box,
+.alphabet {
+  width: 1.875rem; //30px;
+  height: 1.875rem; // 30px;
+  background: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+@media (min-width: 600px) {
+  .empty-box,
+  .alphabet {
+    width: 3.125rem; //50px;
+    height: 3.125rem; // 50px;
+  }
+}
+
+.empty-box {
+  border: 2px solid var(--clr-dark);
+}
+
+button {
+  border: 0;
+  background: 0;
+  font-size: inherit;
+  cursor: pointer;
+}
+
+.flex {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

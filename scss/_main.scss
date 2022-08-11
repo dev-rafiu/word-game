@@ -1,0 +1,41 @@
+.mixed-word-container {
+  margin-top: 2rem;
+  padding: 1.5rem;
+}
+
+.alphabet {
+  font-size: 0.8rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  background-color: var(--clr-bg);
+  transition: all 0.3s ease;
+  position: relative;
+
+  @media (min-width: 600px) {
+    font-size: 1.2rem;
+  }
+}
+
+.dragging.alphabet {
+  opacity: 0.5;
+}
+
+.submit-btn {
+  text-align: center;
+  background: var(--clr-bg);
+  color: #fff;
+  padding: 0.5rem 0.8rem;
+  border-radius: 5px;
+  display: inline-block;
+  width: 5rem;
+  margin: 0 auto;
+  transition: background 0.25s ease;
+
+  &:hover {
+    background: var(--clr-dark);
+  }
+}
+
+.dragover.empty-box {
+  border-style: dotted;
+}

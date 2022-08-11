@@ -1,0 +1,47 @@
+header {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  .game-info {
+    gap: 1rem;
+    margin-top: 2rem;
+    font-size: 1.2rem;
+
+    @media screen and (min-width: 650px) {
+      & {
+        font-size: 2rem;
+      }
+    }
+
+    .level-info {
+      background-color: var(--clr-bg);
+      padding: 0.2rem 0.5rem;
+      border-radius: 5px;
+    }
+  }
+
+  .filter-btns {
+    .btn {
+      color: var(--clr-dark);
+      font-size: inherit;
+      font-weight: bold;
+      text-transform: capitalize;
+      padding: 0.5rem;
+      border-radius: 5px;
+      transition: color 0.5s ease, background 0.5s ease;
+
+      &:hover {
+        color: var(--clr-border);
+        background: var(--clr-bg);
+      }
+    }
+    .btn.active {
+      background: var(--clr-bg);
+    }
+  }
+}
+.check {
+  font-size: 1rem;
+}
