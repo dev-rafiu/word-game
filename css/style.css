@@ -27,7 +27,6 @@ body {
   height: 100%;
   z-index: 2;
   transition: all 0.5s ease;
-  display: none;
 }
 .splash-screen .title {
   margin-top: 1rem;
