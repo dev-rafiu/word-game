@@ -1,92 +1,75 @@
 import Data from "./data.js";
 
 window.addEventListener("DOMContentLoaded", () => {
-  getMixedAlphabets();
+  getAlphabets();
   getEmptyBoxes();
 });
 
-// open and close rules
-const rules = document.querySelector(".rules");
-const rulesContainer = document.querySelector(".rules-container");
-const openRulesBtn = document.querySelector(".expand-btn");
-openRulesBtn.addEventListener("click", () => {
-  const rulesHeight = rules.getBoundingClientRect().height;
-  const rulesContainerHeight = rulesContainer.getBoundingClientRect().height;
-  rulesContainerHeight == 0
-    ? (rulesContainer.style.height = `${rulesHeight}px`)
-    : (rulesContainer.style.height = 0);
-});
-//================
-
-// click start game button to start game
-const startScreen = document.querySelector(".start-screen");
-const startGameBtn = document.querySelector(".start-game-btn");
+//start game button to start game
+const splashScreen = document.querySelector(".splash-screen");
+const startGameBtn = document.querySelector(".start-btn");
 const outerBar = document.querySelector(".outer-progress-bar");
-
-function loadProgressBar(seconds) {
-  const innerBar = document.querySelector(".inner-progress-bar");
+const innerBar = document.querySelector(".inner-progress-bar");
+function startGame(seconds) {
   outerBar.style.display = "block";
   let percentage = 0;
   let interval = setInterval(() => {
     innerBar.style.width = percentage + "%";
     percentage += 1;
-    if (percentage >= 101) {
+    if (percentage >= 100) {
       clearInterval(interval);
       setTimeout(() => {
-        startScreen.classList.add("hide");
+        splashScreen.classList.add("hide");
         outerBar.style.display = "none";
       }, 1000);
     }
   }, (seconds * 1000) / 100);
 }
 startGameBtn.addEventListener("click", () => {
-  loadProgressBar(3);
+  startGame(3);
 });
-//=======================
 
-const mixedAlphabetsContainer = document.querySelector(".mixed-word-container");
+const mixedWordContainer = document.querySelector(".mixed-word-container");
 const emptyBoxesContainer = document.querySelector(".empty-boxes-container");
 const numberOfLevels = document.querySelector(".total-number");
+const score = document.querySelector(".score");
 
 let currentScore = 0;
-const scoreElement = document.querySelector(".score");
-scoreElement.innerText = currentScore;
+score.innerText = currentScore;
 
 let currentItem = 0;
-let wordObjects = Data;
+let words = Data;
+
 //===============
-const easyCategory = wordObjects.filter(
-  (word) => word.difficultyLevel === "easy"
-);
+const easyCategory = words.filter((word) => word.difficultyLevel === "easy");
 // ===============
 
 //===============
-const intermediateCategory = wordObjects.filter(
+const intermediateCategory = words.filter(
   (word) => word.difficultyLevel === "intermediate"
 );
 // ===============
 
 //===============
-const hardCategory = wordObjects.filter(
-  (word) => word.difficultyLevel === "hard"
-);
+const hardCategory = words.filter((word) => word.difficultyLevel === "hard");
 // ===============
 
-let initialWord = wordObjects[currentItem].wrongWord.split("");
+let initialWord = words[currentItem].wrongWord.split("");
 const currentLevel = document.querySelector(".level-number");
 currentLevel.innerText = currentItem + 1;
-numberOfLevels.innerText = wordObjects.length;
+numberOfLevels.innerText = words.length;
 
 /*function gets word from wordObjects and returns each alphabet inside of an element*/
-function getMixedAlphabets() {
+function getAlphabets() {
   const mixedAlphabets = initialWord
     .map((char) => {
       return `<div class="alphabet flex" draggable="true">${char}</div>`;
     })
     .join("");
-  mixedAlphabetsContainer.innerHTML = mixedAlphabets;
+  mixedWordContainer.innerHTML = mixedAlphabets;
 
   const alphabets = document.querySelectorAll(".alphabet");
+
   alphabets.forEach((alphabet) => {
     alphabet.addEventListener("dragstart", () => {
       alphabet.classList.add("dragging");
@@ -107,8 +90,8 @@ function getEmptyBoxes() {
     })
     .join("");
   emptyBoxesContainer.innerHTML = emptyBoxes;
-  const dropBoxes = document.querySelectorAll(".empty-box");
-  dropBoxes.forEach((emptyBox) => {
+  const boxes = document.querySelectorAll(".empty-box");
+  boxes.forEach((emptyBox) => {
     emptyBox.addEventListener("dragover", (e) => {
       const containsElement = emptyBox.querySelector(".alphabet");
       emptyBox.classList.add("dragover");
@@ -122,7 +105,7 @@ function getEmptyBoxes() {
     emptyBox.addEventListener("drop", () => {
       const element = document.querySelector(".dragging");
       emptyBox.append(element);
-      // element.removeAttribute("draggable");
+      element.removeAttribute("draggable");
       emptyBox.classList.remove("dragover");
     });
   });
@@ -131,13 +114,13 @@ function getEmptyBoxes() {
 
 function reset(category) {
   currentScore = 0;
-  scoreElement.innerText = currentScore;
-  wordObjects = category;
+  score.innerText = currentScore;
+  words = category;
   currentItem = 0;
   currentLevel.innerText = currentItem + 1;
-  numberOfLevels.innerText = wordObjects.length;
+  numberOfLevels.innerText = words.length;
   initialWord = category[currentItem].wrongWord.split("");
-  getMixedAlphabets();
+  getAlphabets();
   getEmptyBoxes();
 }
 
@@ -170,7 +153,7 @@ function updateGame(category) {
   //==========
   if (newWord === category[currentItem].rightWord.toUpperCase()) {
     currentScore += 5;
-    scoreElement.innerText = currentScore;
+    score.innerText = currentScore;
     currentItem += 1;
     if (currentItem === category.length) {
       const modalOverlay = document.querySelector(".modal-overlay");
@@ -184,37 +167,31 @@ function updateGame(category) {
     }
     initialWord = category[currentItem].wrongWord.split("");
     currentLevel.innerText = currentItem + 1;
-    getMixedAlphabets();
+    getAlphabets();
     getEmptyBoxes();
   } else {
-    getMixedAlphabets();
+    getAlphabets();
     getEmptyBoxes();
   }
 }
 
 const submitBtn = document.querySelector(".submit-btn");
 submitBtn.addEventListener("click", () => {
-  if (mixedAlphabetsContainer.childNodes.length === 0) {
-    updateGame(wordObjects);
+  if (mixedWordContainer.childNodes.length === 0) {
+    updateGame(words);
   }
 
-  if (
-    mixedAlphabetsContainer.childNodes.length === 0 &&
-    wordObjects == easyCategory
-  ) {
+  if (mixedWordContainer.childNodes.length === 0 && words == easyCategory) {
     updateGame(easyCategory);
   }
 
   if (
-    mixedAlphabetsContainer.childNodes.length === 0 &&
-    wordObjects == intermediateCategory
+    mixedWordContainer.childNodes.length === 0 &&
+    words == intermediateCategory
   ) {
     updateGame(intermediateCategory);
   }
-  if (
-    mixedAlphabetsContainer.childNodes.length === 0 &&
-    wordObjects == hardCategory
-  ) {
+  if (mixedWordContainer.childNodes.length === 0 && words == hardCategory) {
     updateGame(hardCategory);
   }
 });

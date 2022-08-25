@@ -4,47 +4,56 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- google font -->
+
+    <!-- <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap"
+      rel="stylesheet"
+    /> -->
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat&family=Poppins&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- css link -->
     <link rel="stylesheet" href="./css/style.css" />
-    <title>Game</title>
+
+    <title>Word Game</title>
   </head>
   <body>
-    <main class="container">
-      <div class="start-screen flex">
-        <h1 class="name">Word Puzzle</h1>
-        <div class="game-rules">
-          <div class="header flex">
-            <button class="expand-btn">Help</button>
-          </div>
-          <div class="rules-container">
-            <ul class="rules">
-              <li>
-                Drag and drop the alphabets into the empty boxes to re-arrange.
-              </li>
-              <li>
-                Click the submit to go to the next level. If alphabets are
-                aranged correctly, you earn 5 points otherwise player stays on
-                the current level.
-              </li>
-              <li>
-                Player can not drop an alphabet in a box if the box already
-                contains an alphabet.
-              </li>
-              <li>
-                Player can not skip any level or go back to any previous level.
-              </li>
-              <li>Have fun.</li>
-            </ul>
-          </div>
-        </div>
+    <main class="main">
+      <div class="splash-screen">
+        <h1 class="title">Word Puzzle</h1>
 
-        <button type="button" class="start-game-btn">start game</button>
+        <ul class="help-list">
+          <li>
+            Drag and drop the alphabets into the empty boxes to re-arrange.
+          </li>
+          <li>
+            Click the submit to go to the next level. If alphabets are aranged
+            correctly, you earn 5 points otherwise player stays on the current
+            level.
+          </li>
+          <li>
+            Player can not drop an alphabet in a box if the box already contains
+            an alphabet.
+          </li>
+          <li>
+            Player can not skip any level or go back to any previous level.
+          </li>
+          <li>Have fun.</li>
+        </ul>
+
+        <button type="button" class="start-btn">start game</button>
 
         <div class="outer-progress-bar">
           <div class="inner-progress-bar"></div>
         </div>
       </div>
 
-      <header>
+      <section class="game-area">
         <div class="game-info flex">
           <div class="level-info">
             <span class="level-number"></span>/<span
@@ -59,7 +68,7 @@
           <button class="btn filter-btn">intermediate</button>
           <button class="btn filter-btn">hard</button>
         </div>
-      </header>
+      </section>
 
       <div class="mixed-word-container"></div>
       <div class="empty-boxes-container"></div>

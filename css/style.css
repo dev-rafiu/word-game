@@ -12,12 +12,12 @@
 
 body {
   color: var(--clr-dark);
-  font-family: "Architects Daughter", cursive;
+  font-family: "Poppins", sans-serif;
   background-image: radial-gradient(#bfc0c1 8.2%, transparent 0);
   background-size: 20px 20px;
 }
 
-.start-screen {
+.splash-screen {
   background: var(--clr-bg);
   text-align: center;
   position: fixed;
@@ -27,36 +27,23 @@ body {
   height: 100%;
   z-index: 2;
   transition: all 0.5s ease;
-  flex-direction: column;
+  display: none;
 }
-.start-screen .name {
+.splash-screen .title {
   margin-top: 1rem;
 }
-.start-screen .game-rules {
-  background: white;
+.splash-screen .help-list {
   text-align: left;
   border-radius: 5px;
-  max-width: 300px;
+  max-width: 500px;
   margin: 1rem auto;
   padding: 1rem;
 }
-.start-screen .game-rules .header {
-  justify-content: space-between;
+.splash-screen .help-list > * {
+  line-height: 1.3;
+  margin: 0.5rem 0;
 }
-.start-screen .game-rules .header .expand-btn {
-  color: var(--clr-bg);
-}
-.start-screen .game-rules .rules-container {
-  height: 0;
-  overflow: hidden;
-  transition: all 0.5s ease;
-}
-.start-screen .game-rules .rules {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-.start-screen .outer-progress-bar {
+.splash-screen .outer-progress-bar {
   width: 18.75rem;
   height: 1.25rem;
   margin: 1rem auto;
@@ -65,25 +52,28 @@ body {
   background-color: #fff;
   display: none;
 }
-.start-screen .inner-progress-bar {
+.splash-screen .inner-progress-bar {
   width: 0;
   height: 100%;
   background: #272727;
 }
-.start-screen .start-game-btn {
+.splash-screen .start-btn {
   display: inline-block;
   background: var(--clr-dark);
   color: #fff;
-  padding: 0.7rem 1.5rem;
+  padding: 0.7rem;
   border-radius: 5px;
-  font-family: inherit;
   text-transform: capitalize;
-  font-size: 1rem;
-  transition: all 0.3s ease;
+  font-size: 0.9rem;
+  transition: color 0.2s ease;
   cursor: pointer;
 }
-.start-screen .start-game-btn:hover {
-  transform: scale(0.95);
+.splash-screen .start-btn:hover {
+  color: var(--clr-bg);
+}
+
+.splash-screen.hide {
+  transform: translateX(-100%);
 }
 
 .modal-overlay {
@@ -131,49 +121,93 @@ body {
   transform: translateX(-100%);
 }
 
-header {
+.game-area {
   align-items: center;
   display: flex;
   flex-direction: column;
   gap: 1rem;
 }
-header .game-info {
+
+.game-info {
   gap: 1rem;
-  margin-top: 2rem;
   font-size: 1.2rem;
 }
-@media screen and (min-width: 650px) {
-  header .game-info {
-    font-size: 2rem;
+@media screen and (min-width: 600px) {
+  .game-info {
+    font-size: 1.5rem;
   }
 }
-header .game-info .level-info {
+.game-info .level-info {
   background-color: var(--clr-bg);
   padding: 0.2rem 0.5rem;
   border-radius: 5px;
 }
-header .filter-btns .btn {
+
+.filter-btns {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.filter-btns .filter-btn {
   color: var(--clr-dark);
-  font-size: inherit;
+  font-size: 1rem;
   font-weight: bold;
   text-transform: capitalize;
   padding: 0.5rem;
   border-radius: 5px;
   transition: color 0.5s ease, background 0.5s ease;
 }
-header .filter-btns .btn:hover {
+.filter-btns .filter-btn:hover {
   color: var(--clr-border);
   background: var(--clr-bg);
 }
-header .filter-btns .btn.active {
+.filter-btns .filter-btn.active {
   background: var(--clr-bg);
 }
 
-.check {
-  font-size: 1rem;
+.mixed-word-container {
+  margin-top: 2rem;
+  padding: 1.5rem;
 }
 
-.container {
+.alphabet {
+  background-color: var(--clr-bg);
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  position: relative;
+  transition: all 0.3s ease;
+}
+@media (min-width: 600px) {
+  .alphabet {
+    font-size: 1.2rem;
+  }
+}
+
+.dragging.alphabet {
+  opacity: 0.5;
+}
+
+.submit-btn {
+  text-align: center;
+  background: var(--clr-bg);
+  color: var(--clr-dark);
+  padding: 0.5rem 0.8rem;
+  border-radius: 5px;
+  display: inline-block;
+  width: 5rem;
+  margin: 0 auto;
+  transition: opacity 0.25s ease;
+}
+.submit-btn:hover {
+  opacity: 0.9;
+}
+
+.dragover.empty-box {
+  border-style: dotted;
+}
+
+.main {
   min-height: 100vh;
   display: grid;
   place-content: center;
@@ -191,9 +225,8 @@ header .filter-btns .btn.active {
 
 .empty-box,
 .alphabet {
-  width: 1.875rem;
-  height: 1.875rem;
-  background: #fff;
+  width: 2.5rem;
+  height: 2.5rem;
   border-radius: 4px;
   cursor: pointer;
 }
@@ -220,46 +253,4 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.mixed-word-container {
-  margin-top: 2rem;
-  padding: 1.5rem;
-}
-
-.alphabet {
-  font-size: 0.8rem;
-  font-weight: bold;
-  text-transform: uppercase;
-  background-color: var(--clr-bg);
-  transition: all 0.3s ease;
-  position: relative;
-}
-@media (min-width: 600px) {
-  .alphabet {
-    font-size: 1.2rem;
-  }
-}
-
-.dragging.alphabet {
-  opacity: 0.5;
-}
-
-.submit-btn {
-  text-align: center;
-  background: var(--clr-bg);
-  color: #fff;
-  padding: 0.5rem 0.8rem;
-  border-radius: 5px;
-  display: inline-block;
-  width: 5rem;
-  margin: 0 auto;
-  transition: background 0.25s ease;
-}
-.submit-btn:hover {
-  background: var(--clr-dark);
-}
-
-.dragover.empty-box {
-  border-style: dotted;
 }/*# sourceMappingURL=style.css.map */

@@ -1,4 +1,4 @@
-.container {
+.main {
   min-height: 100vh;
   display: grid;
   place-content: center;
@@ -16,9 +16,8 @@
 
 .empty-box,
 .alphabet {
-  width: 1.875rem; //30px;
-  height: 1.875rem; // 30px;
-  background: #fff;
+  width: 2.5rem; //40px;
+  height: 2.5rem; // 40px;
   border-radius: 4px;
   cursor: pointer;
 }
